@@ -24,32 +24,33 @@ var random = function() {
 var createPassword = function() {
   var newPassword = [];
   var numberOfCharacters = parseInt(prompt("Specify the number of characters for your password (8 to 128)"));
-  var wantSpecialCharacters = confirm("Do you want special characters in your password?");
-  var wantUppercase = confirm("Do you want uppercase letters in your password?");
-  var wantNumbers = confirm("Do you want numbers in your password?");
-
-  if (wantSpecialCharacters === true) {
-    wantSpecialCharacters = 1;
-  } else {
-    wantSpecialCharacters = 0
-  }
-
-  if (wantUppercase === true) {
-    wantUppercase = 1;
-  } else {
-    wantUppercase = 0
-  }
-
-  if (wantNumbers === true) {
-    wantNumbers = 1;
-  } else {
-    wantNumbers = 0
-  }
 
   if (numberOfCharacters < 8 || numberOfCharacters > 128) {
     alert("Your request cannot be processed. The number of characters for your password must be between 8 and 128. Please try again.");
   } else if (numberOfCharacters >= 8 && numberOfCharacters <= 128) {
     var randomValues = random();
+    var wantSpecialCharacters = confirm("Do you want special characters in your password?");
+    var wantUppercase = confirm("Do you want uppercase letters in your password?");
+    var wantNumbers = confirm("Do you want numbers in your password?");
+
+    if (wantSpecialCharacters === true) {
+      wantSpecialCharacters = 1;
+    } else {
+      wantSpecialCharacters = 0
+    }
+
+    if (wantUppercase === true) {
+      wantUppercase = 1;
+    } else {
+      wantUppercase = 0
+    }
+
+    if (wantNumbers === true) {
+      wantNumbers = 1;
+    } else {
+      wantNumbers = 0
+    }
+
     if (wantSpecialCharacters === 0 && wantUppercase === 0 && wantNumbers === 0) {
       newPassword.push(randomValues[0]);
     } else if (wantSpecialCharacters === 1 && wantUppercase === 0 && wantNumbers === 0) {
@@ -107,12 +108,19 @@ var createPassword = function() {
       }
     }
 
+    for (var i = 0; i < newPassword.length; i++) {
+      if (newPassword[i] === undefined) {
+        newCharacter = random();
+        newPassword[i] = newCharacter[0];
+      }
+    }
+
     let displayPassword = newPassword.join("");
-    console.log(newPassword);
-    console.log(newPassword.length);
-    console.log(displayPassword);
-    console.log(displayPassword.length);
     console.log(numberOfCharacters);
+    console.log(displayPassword.length);
+    console.log(newPassword);
+    console.log(displayPassword);
+    
     let showPassword = document.getElementById("password");
     showPassword.textContent = displayPassword;
     newPassword = [];
