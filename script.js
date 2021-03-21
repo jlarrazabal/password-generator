@@ -7,12 +7,13 @@ var uppercaseLetters = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "
 //Function to create a random collection of lowercase letters, uppercase letters, special characters, and numbers.
 var random = function() {
   let randomCharacters = [];
-  let randomCase = Math.floor(Math.random() * 27);
-  let randomSpecialCharacter = Math.floor(Math.random() * 14);
+  let randomLowerCase = Math.floor(Math.random() * lowercaseLetters.length);
+  let randomUperCase = Math.floor(Math.random() * uppercaseLetters.length);
+  let randomSpecialCharacter = Math.floor(Math.random() * specialCharacters.length);
   let randomNumber = Math.floor(Math.random() * 10);
-  let lowerCasePasswordCharacter = lowercaseLetters[randomCase];
+  let lowerCasePasswordCharacter = lowercaseLetters[randomLowerCase];
   let specialPasswordCharacter = specialCharacters[randomSpecialCharacter];
-  let upperCasePasswordCharacter = uppercaseLetters[randomCase];
+  let upperCasePasswordCharacter = uppercaseLetters[randomUperCase];
   randomCharacters.push(lowerCasePasswordCharacter);
   randomCharacters.push(specialPasswordCharacter);
   randomCharacters.push(upperCasePasswordCharacter);
@@ -20,7 +21,7 @@ var random = function() {
   return randomCharacters;
 }
 
-//The function that creates the password for the user. It evaluates the user's password requirements and returns the suggested password that meets the criteria provided.
+//Function that creates the password for the user. It evaluates the user's password requirements and returns the suggested password that meets the criteria provided.
 var createPassword = function() {
   var newPassword = [];
   var numberOfCharacters = parseInt(prompt("Specify the number of characters for your password (8 to 128)"));
@@ -33,48 +34,30 @@ var createPassword = function() {
     var wantUppercase = confirm("Do you want uppercase letters in your password?");
     var wantNumbers = confirm("Do you want numbers in your password?");
 
-    if (wantSpecialCharacters === true) {
-      wantSpecialCharacters = 1;
-    } else {
-      wantSpecialCharacters = 0
-    }
-
-    if (wantUppercase === true) {
-      wantUppercase = 1;
-    } else {
-      wantUppercase = 0
-    }
-
-    if (wantNumbers === true) {
-      wantNumbers = 1;
-    } else {
-      wantNumbers = 0
-    }
-
-    if (wantSpecialCharacters === 0 && wantUppercase === 0 && wantNumbers === 0) {
+    if (!wantSpecialCharacters && !wantUppercase && !wantNumbers) {
       newPassword.push(randomValues[0]);
-    } else if (wantSpecialCharacters === 1 && wantUppercase === 0 && wantNumbers === 0) {
+    } else if (wantSpecialCharacters && !wantUppercase && !wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[1]);
-    } else if (wantSpecialCharacters === 0 && wantUppercase === 1 && wantNumbers === 0) {
+    } else if (!wantSpecialCharacters && wantUppercase && !wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[2]);
-    } else if (wantSpecialCharacters === 0 && wantUppercase === 0 && wantNumbers === 1) {
+    } else if (!wantSpecialCharacters && !wantUppercase && wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[3]);
-    } else if (wantSpecialCharacters === 1 && wantUppercase === 1 && wantNumbers === 0) {
+    } else if (wantSpecialCharacters && wantUppercase && !wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[1]);
       newPassword.push(randomValues[2]);
-    } else if (wantSpecialCharacters === 0 && wantUppercase === 1 && wantNumbers === 1) {
+    } else if (!wantSpecialCharacters && wantUppercase && wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[2]);
       newPassword.push(randomValues[3]);
-    } else if (wantSpecialCharacters === 1 && wantUppercase === 0 && wantNumbers === 1) {
+    } else if (wantSpecialCharacters && !wantUppercase && wantNumbers) {
       newPassword.push(randomValues[0]);
-      newPassword.push(randomValues[2]);
+      newPassword.push(randomValues[1]);
       newPassword.push(randomValues[3]);
-    } else if (wantSpecialCharacters === 1 && wantUppercase === 1 && wantNumbers === 1) {
+    } else if (wantSpecialCharacters && wantUppercase && wantNumbers) {
       newPassword.push(randomValues[0]);
       newPassword.push(randomValues[1]);
       newPassword.push(randomValues[2]);
@@ -83,35 +66,28 @@ var createPassword = function() {
 
     while (newPassword.length < numberOfCharacters) {
       var randomPush = random();
-      if (wantSpecialCharacters === 0 && wantUppercase === 0 && wantNumbers === 0) {
+      if (!wantSpecialCharacters && !wantUppercase && !wantNumbers) {
         newPassword.push(randomPush[0]);
-      } else if (wantSpecialCharacters === 1 && wantUppercase === 0 && wantNumbers === 0) {
+      } else if (wantSpecialCharacters && !wantUppercase && !wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[1]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 2)]);
-      } else if (wantSpecialCharacters === 0 && wantUppercase === 1 && wantNumbers === 0) {
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (!wantSpecialCharacters && wantUppercase && !wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[2]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 2)]);
-      } else if (wantSpecialCharacters === 0 && wantUppercase === 0 && wantNumbers === 1) {
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (!wantSpecialCharacters && !wantUppercase && wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[3]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 2)]);
-      } else if (wantSpecialCharacters === 1 && wantUppercase === 1 && wantNumbers === 0) {
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (wantSpecialCharacters && wantUppercase && !wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[1], randomPush[2]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 3)]);
-      } else if (wantSpecialCharacters === 0 && wantUppercase === 1 && wantNumbers === 1) {
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (!wantSpecialCharacters && wantUppercase && wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[2], randomPush[3]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 3)]);
-      } else if (wantSpecialCharacters === 1 && wantUppercase === 0 && wantNumbers === 1) {
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (wantSpecialCharacters && !wantUppercase && wantNumbers) {
         let randomCharacter = [randomPush[0], randomPush[1], randomPush[3]];
-        newPassword.push(randomCharacter[Math.floor(Math.random() * 3)]);
-      } else if (wantSpecialCharacters === 1 && wantUppercase === 1 && wantNumbers === 1) {
-        newPassword.push(randomPush[Math.floor(Math.random() * 4)]);
-      }
-    }
-
-    for (var i = 0; i < newPassword.length; i++) {
-      if (newPassword[i] === undefined) {
-        newCharacter = random();
-        newPassword[i] = newCharacter[0];
+        newPassword.push(randomCharacter[Math.floor(Math.random() * randomCharacter.length)]);
+      } else if (wantSpecialCharacters && wantUppercase && wantNumbers) {
+        newPassword.push(randomPush[Math.floor(Math.random() * randomPush.length)]);
       }
     }
 
@@ -120,7 +96,7 @@ var createPassword = function() {
     console.log(displayPassword.length);
     console.log(newPassword);
     console.log(displayPassword);
-    
+
     let showPassword = document.getElementById("password");
     showPassword.textContent = displayPassword;
     newPassword = [];
@@ -133,5 +109,6 @@ var createPassword = function() {
     console.log("Error: The scenario is not mapped.");
   }
 }
+
 //Captures when the button to generate a new password is clicked by the user and triggers the createPassword function.
 requestPassword.addEventListener("click", createPassword);
